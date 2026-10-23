@@ -1,0 +1,39 @@
+
+graph = {
+    'A': [('B', 1), ('C', 3)],
+    'B': [('D', 1)],
+    'C': [('D', 1)],
+    'D': []
+}
+
+h = {'A': 2, 'B': 1, 'C': 1, 'D': 0}
+
+open_list = [(h['A'], 0, 'A', ['A'])]
+best_g = {'A': 0}
+
+while open_list:
+    open_list.sort()
+    f, g, node, path = open_list.pop(0)
+
+    if g != best_g.get(node):
+        continue
+
+    if node == 'D':
+        print("Path:", path)
+        print("Cost:", g)
+        break
+
+    for neighbor, cost in graph[node]:
+        new_g = g + cost
+
+        if new_g < best_g.get(neighbor, float("inf")):
+            best_g[neighbor] = new_g
+            open_list.append(
+                (new_g + h[neighbor], new_g,
+                 neighbor, path + [neighbor])
+            )
+
+
+
+
+
